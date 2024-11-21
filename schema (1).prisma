@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  clerkId         String   @unique
+  bio             String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  hasNotification Boolean?
+
+  following     Follow[]       @relation(name: "following")
+  followers     Follow[]       @relation(name: "follower")
+  posts         Post[]
+  comments      Comment[]
+  notifications Notification[]
+}
+
+model Follow {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  followerId  String   @db.ObjectId
+  followingId String   @db.ObjectId
+
+  following User @relation(name: "following", fields: [followerId], references: [id], onDelete: Cascade)
+  follower  User @relation(name: "follower", fields: [followingId], references: [id], onDelete: Cascade)
+}
+
+model Post {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  content   String
+  image     String
+  tags      String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String   @db.ObjectId
+  likedIds  String[] @db.ObjectId
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  comments Comment[]
+}
+
+model Comment {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String   @db.ObjectId
+  postId    String   @db.ObjectId
+  likedIds  String[] @db.ObjectId
+  parentId  String?  @db.ObjectId
+
+  parentComment Comment?  @relation("ChildComments", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  childComments Comment[] @relation("ChildComments")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  content    String
+  targetUser String?  @db.ObjectId
+  userId     String   @db.ObjectId
+  createdAt  DateTime @default(now())
+  isRead     Boolean
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

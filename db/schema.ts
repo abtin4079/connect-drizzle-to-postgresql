@@ -28,7 +28,7 @@ export const PostTable = pgTable("post", {
   averageRating: real('averageRating').notNull().default(0),
   creatAt: timestamp("creatAt").notNull().defaultNow(),
   updateAt: timestamp("updateAt").notNull().defaultNow(),
-  authorId: uuid('ahtorId').references(() => UserTable.id).notNull(),
+  authorId: uuid('authorId').references(() => UserTable.id).notNull(),
 })
 
 // many-to-many relationship
