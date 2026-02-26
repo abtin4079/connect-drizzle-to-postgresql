@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🐘 Connect Drizzle to PostgreSQL
 
-## Getting Started
+A **Next.js** starter project demonstrating how to connect and use **Drizzle ORM** with a **PostgreSQL** database, written in TypeScript.
 
-First, run the development server:
+
+## 🛠️ Tech Stack
+
+- **Next.js** — React framework
+- **Drizzle ORM** — Type-safe SQL ORM
+- **PostgreSQL** — Database
+- **TypeScript** — Primary language
+- **Tailwind CSS** — Styling
+- **Prisma** — Schema reference (included for comparison)
+
+
+## 🚀 Getting Started
+
+### 1. Clone & Install
+
+```bash
+git clone https://github.com/abtin4079/connect-drizzle-to-postgresql.git
+cd connect-drizzle-to-postgresql
+npm install
+```
+
+### 2. Configure Environment
+
+Edit the `.env` file with your PostgreSQL connection string:
+
+```env
+DATABASE_URL=postgresql://user:password@localhost:5432/yourdb
+```
+
+### 3. Run Migrations
+
+```bash
+npx drizzle-kit push
+```
+
+### 4. Start the Dev Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## 📁 Structure
 
-## Learn More
+```
+app/        # Next.js app router pages
+db/         # Drizzle schema & database config
+public/     # Static assets
+drizzle.config.ts   # Drizzle configuration
+```
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+👤 **Author:** [abtin4079](https://github.com/abtin4079)
